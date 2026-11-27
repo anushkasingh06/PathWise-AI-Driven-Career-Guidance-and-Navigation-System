@@ -1,4 +1,3 @@
-I have uploaded the screenshots that you gave me but separately, they are not in any folder. can you write me a code like this so that I can just make the changes easily
 # PathWise - AI-Driven Career Guidance and Navigation System
 
 ## Introduction
