@@ -1,62 +1,44 @@
-# PostAlign - AI-Driven Social Media Content Generator
+I have uploaded the screenshots that you gave me but separately, they are not in any folder. can you write me a code like this so that I can just make the changes easily
+# PathWise - AI-Driven Career Guidance and Navigation System
 
 ## Introduction
 
-PostAlign is an AI-driven social media content generation application designed to help users create engaging, customized posts with minimal effort. The application uses Large Language Models (LLMs) to generate content based on user-selected topics, post length, language, and tone.
+PathWise is a career-guidance web application designed to help engineering students explore roles that may fit their technical skills and interests. The project combines a questionnaire-based career prediction workflow with supporting pages for career information, courses, and learning resources.
 
-Built using Streamlit, PostAlign provides an interactive interface where users can choose trending topics, enter custom topics, or select from predefined content tags to generate personalized social media posts.
+The repository uses a PHP website for the main user-facing experience and a Python machine-learning component for career-role prediction.
 
 ## Overview
 
-The application is organized into separate Python modules. `main.py` provides the Streamlit interface and collects user preferences, while `post_generator.py` handles prompt construction and AI-powered content generation.
+The prediction dataset contains 17 skill-related attributes and a role label. In `testmodel.py`, the data is split into training and test sets, and a K-Nearest Neighbours classifier with five neighbours is trained. The fitted model is saved as `careerlast.pkl`.
 
-The `FewShotPosts` component retrieves relevant examples from preprocessed post data. These examples are filtered according to the selected topic, language, length, and tone, and are incorporated into prompts to guide the generated content.
+The Flask application in `testapp.py` accepts form values, loads the saved model, and returns a predicted role along with other role suggestions derived from the model's probability output. The PHP site provides the main landing page, account registration and login flows, and links to the prediction service and career-resource sections.
 
-The preprocessing module enriches raw post data with metadata such as language, tags, tone, and post length. LangChain is used to structure the language-model workflow, while Groq provides access to the configured Llama model. NewsAPI is integrated to retrieve trending topics for content generation.
-
-## Website Preview
-
-### Homepage
-
-![PostAlign Homepage](PostAlign_Homepage.jpg)
-
-### Homepage with Trending Topics Sidebar
-
-![PostAlign Homepage with Trending Topics Sidebar](PostAlign_Homepage_Trending_Sidebar.jpg)
+A separate experiment in `bagging.py` evaluates a bagging classifier built from decision trees using cross-validation. It is included as an additional modelling experiment rather than being presented as the deployed prediction model.
 
 ## Main Functionality
 
-- Select trending topics retrieved through NewsAPI.
-- Enter custom topics manually or select from predefined tags.
-- Generate short, medium, and long social media posts.
-- Customize generated content using different tones, including Professional, Casual, Humorous, Inspirational, and Neutral.
-- Generate content in multiple supported languages.
-- Use few-shot learning with relevant example posts to guide content generation.
-- View trending headlines through an interactive sidebar.
+- Register and log in through the PHP website.
+- Submit skill-related responses to the career prediction interface.
+- Predict a career category from the submitted skill profile.
+- Display additional possible roles based on model probability scores.
+- Browse career information pages for different professional roles.
+- Access course and knowledge-resource sections.
 
 ## Implementation
 
-- **Programming Language:** Python
-- **Frontend:** Streamlit
-- **Language Model Integration:** Groq API, Llama 3.1 8B Instant
-- **Prompt Engineering:** LangChain, Few-Shot Prompting
-- **Data Processing:** Pandas, JSON
-- **Trending Topics:** NewsAPI
-- **Configuration Management:** Python Dotenv
+- **Frontend and website:** PHP, HTML, CSS, JavaScript
+- **Backend prediction service:** Python, Flask
+- **Machine learning:** scikit-learn, K-Nearest Neighbours
+- **Data handling:** Pandas, NumPy
+- **Model persistence:** Pickle
+- **Database:** MySQL
 
 ## Running the Project
 
-Install the dependencies listed in `requirements.txt` and configure the required API keys in a `.env` file.
+The repository contains two connected parts: the PHP website and the Flask prediction service. The PHP application requires a local PHP/MySQL environment. The prediction service requires Python dependencies and the model/data files used by the scripts.
 
-Run the application using:
-
-```bash
-pip install -r requirements.txt
-streamlit run main.py
-```
-
-The application expects preprocessed post data at `data/processed_posts.json`. The preprocessing script can be executed to generate this file from the raw post dataset, provided the required input data and API configuration are available.
+The current PHP pages refer to the Flask service at `127.0.0.1:5000`, so both services need to be configured and running locally for the complete flow to work. Update local database settings in `config.php` before starting the website.
 
 ## Notes
 
-The quality and relevance of generated posts depend on the selected topic, example data, prompt configuration, and language-model responses. Generated content should be reviewed and edited before publishing.
+Career suggestions are model outputs based on the dataset and features used in this project. They are intended as guidance for exploration, not as definitive decisions about a person's career.
